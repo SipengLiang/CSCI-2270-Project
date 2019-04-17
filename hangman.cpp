@@ -96,6 +96,8 @@ void Tree::buildLibrary(){
 
   cout << "Enter name of dictionary: " << endl;
   cin >> filename << endl;
+
+  a;lsdkjfs;ld
 }
 
 string Tree::getRandomWord(int wordlength){
