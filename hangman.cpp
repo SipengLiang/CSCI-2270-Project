@@ -23,7 +23,7 @@ void Tree::insertLLNode(TreeNode *treenode, WordNode *wordnode){
 
   //comes before the head
   else if(){
-
+    
   }
 
   //comes after the head
@@ -44,7 +44,7 @@ void Tree::addWord(string word){
   TreeNode *traverse = root;
   TreeNode *previous = nullptr;
 
-
+  
   while(traverse){
     previous = traverse;
 
@@ -66,7 +66,7 @@ void Tree::addWord(string word){
     }
   }
 
-
+  
   //wordlength in tree didn't exist, must create and add to LL
   TreeNode *treenode = new TreeNode;
   treenode->wordlength = wordlength;
@@ -77,7 +77,7 @@ void Tree::addWord(string word){
     root = treenode;
     treenode->head = wordnode;
   }
-
+  
   //new wordlength is less than parent node
   else if(previous->wordlength < wordlength){
     previous->left = treenode;
@@ -99,7 +99,10 @@ void Tree::buildLibrary(){
 }
 
 string Tree::getRandomWord(int wordlength){
+
   cout << "random" << endl;
   cout << "dog" << endl;
 
+
+  pp
 }
