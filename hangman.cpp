@@ -100,5 +100,9 @@ void Tree::buildLibrary(){
 
 string Tree::getRandomWord(int wordlength){
 
+  cout << "random" << endl;
+  cout << "dog" << endl;
+
+
   pp
 }
