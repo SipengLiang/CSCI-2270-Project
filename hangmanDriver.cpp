@@ -1,5 +1,6 @@
 #include <iostream>
-
+#include "hangman.hpp"
+#include "hangman.cpp"
 using namespace std;
 
 void play();
@@ -7,11 +8,12 @@ void play();
 int main(){
   Tree t;
   t.buildLibrary();
-  play();
-  
+  string word;
+  word = t.getRandomWord(3);
+  cout << word << endl;
   return 0;
 }
 
-voit play(){
-  
+void play(){
+
 }

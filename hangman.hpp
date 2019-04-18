@@ -11,7 +11,7 @@ struct WordNode{
   string word;
   struct WordNode *next;
 
-  LLWordNode(){};
+  LLWordNode(){}; //Default constructor
 };
 
 
@@ -35,12 +35,13 @@ private:
   //Helper function for buildLibrary to add word to BST and LL
   void addWord(string word);
   void insertLLNode(TreeNode *treenode, WordNode *wordnode);
-  
+  TreeNode *searchTreeNode(int wordlength, TreeNode *root); // Helper function to search for the tree node with corresponding word length
+
 public:
   Tree();
   ~Tree();
 
-  //Asks for filename and builds library
+  //Asks for filename and builds BST by adding TreeNodes and WordNodes
   void buildLibrary();
 
   //Gets random word based on desired wordlength from library
