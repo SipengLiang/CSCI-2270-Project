@@ -132,7 +132,7 @@ TreeNode *Tree::searchTreeNode(int wordLength, TreeNode *root){
       traverse = traverse->right;
     }
   }
-
+  return traverse;
 }
 
 /******************************************************
