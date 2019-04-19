@@ -11,7 +11,7 @@ struct WordNode{
   string word;
   struct WordNode *next;
 
-  LLWordNode(){}; //Default constructor
+  WordNode(){}; //Default constructor
 };
 
 

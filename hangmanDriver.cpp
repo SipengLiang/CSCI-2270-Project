@@ -1,6 +1,7 @@
 #include <iostream>
+
 #include "hangman.hpp"
-#include "hangman.cpp"
+
 using namespace std;
 
 void play();

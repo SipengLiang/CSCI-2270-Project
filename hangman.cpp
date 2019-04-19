@@ -4,6 +4,7 @@
 #include <time.h>
 #include <fstream>
 
+#include "hangman.hpp"
 
 using namespace std;
 /**************************
@@ -12,11 +13,13 @@ Constructor
 Tree::Tree(){
   root = nullptr;
 }
+
 /**************************
 Deconstructor
 **************************/
 Tree::~Tree(){
 }
+
 /*********************************************
 Function: insertLLNode
 Goal: Once at the appropiate TreeNode, it will insert a wordNode to a linked list
@@ -41,6 +44,7 @@ void Tree::insertLLNode(TreeNode *treenode, WordNode *wordnode){
   else{
    }
 }
+
 /***********************************
 Function: addWord
 Goal: adds a word to the BST, it will call the function insertLLNode
@@ -72,7 +76,7 @@ void Tree::addWord(string word){
     }
 
     //else go left
-    else if(traverse->wordlength < wordlength){
+    else if(wordlength < traverse->wordlength){
       traverse = traverse->left;
     }
 
@@ -95,7 +99,7 @@ void Tree::addWord(string word){
   }
 
   //new wordlength is less than parent node
-  else if(previous->wordlength < wordlength){
+  else if(wordlength < previous->wordlength){
     previous->left = treenode;
     insertLLNode(treenode, wordnode);
   }
@@ -106,6 +110,7 @@ void Tree::addWord(string word){
     insertLLNode(treenode, wordnode);
   }
 }
+
 /*******************************************************
 Function: searchTreeNode
 Goal: Searches for the TreeNode with the given wordLength
@@ -129,6 +134,7 @@ TreeNode *Tree::searchTreeNode(int wordLength, TreeNode *root){
   }
 
 }
+
 /******************************************************
 Function: buildLibrary
 Goal: Takes user input for the name of the file and starts adding words from the file to the BST to build a library
@@ -142,13 +148,12 @@ void Tree::buildLibrary(){
   cout << "Enter name of dictionary: " << endl;
   cin >> filename; //user input
 
-  ifstream read; //instantiate object
-  read.open(filename); // open the file
+  ifstream read(filename); //instantiate object
 
   if(read.is_open()){
     //check if the file was opened successfully
     while(getline(read, line, '\n' )){ // condition: there is a line with text
-      getline(read, line, '\n'); //get word from the line
+      // getline(read, line, '\n'); //get word from the line
       addWord(line); //add the word to BST
     }
   }
@@ -156,6 +161,7 @@ void Tree::buildLibrary(){
     cout << "File could not be opened." << endl; // error handler
   }
 }
+
 /*******************************************************
 Function: getRandomWord
 Goal: Goes through the BST to get a random word of the corresponding wordlength, calls searchNode
