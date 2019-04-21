@@ -9,8 +9,6 @@ void initializeGame(); // builds the library and gets the random word (Calls Gue
 
 void guess(int wordlength, string randWord); //main game mechanic (Calls findMatch, hangman2D)
 
-int findMatch(string randWord, char letter, int size); //checks to see if guess is in the word (called by guess)
-
 void hangman2D(int numIncorrectGuesses); //2D hangman print (called by guess)
 
 
@@ -20,57 +18,91 @@ int main(){
 
 void initializeGame(){
   Tree game;
+  int input;
   int wordLength;
+  bool newGame = true;
 
   cout << "Hello, welcome to hangman super deluxe edition(tm)" << endl;
+
   game.buildLibrary();
 
-  cout << "Please enter a length for the word: ";
-  cin >> wordLength;
+  while(newGame == true){
 
-  string randWord = game.getRandomWord(wordLength);
+    cout << "Please enter a length for the word: ";
+    cin >> wordLength;
 
-  cout << "A random word has been chosen, now try to guess it!" << endl;
-  cout << randWord << endl;
+    string randWord = game.getRandomWord(wordLength);
 
-  randWord.erase(randWord.length() - 1);
+    cout << "A random word has been chosen, now try to guess it!" << endl;
+    cout << randWord << endl;
 
-  guess(wordLength, randWord);
+    randWord.erase(randWord.length() - 1);
+
+    guess(wordLength, randWord);
 
 
+    cout << "1. NEW GAME" << endl;
+    cout << "2. CHOOSE NEW DICTIONARY AND PLAY NEW GAME" << endl;
+    cout << "3. EXIT" << endl;
+    cin >> input;
 
+      if(input == 2){
+        game.buildLibrary();
+        cout << endl;
+        cout << "New Dictionary Added!" << endl;
+      }
+      else if (input == 3){
+        newGame = false;
+        cout << "Goodbye!" << endl;
+      }
+  }
 }
 
 
 void guess(int wordLength, string randWord){
   int index; //figure out match position
   int numIncorrectGuesses = 0; //count the number of wrong guesses
+  int numCorrectGuesses = 0; //count the number of correct guesses
   int size = (randWord.length()); // get size of word
   char letter; //user input
   bool gameOver = false; //state of the game
+  bool found = false; //check to see if a letter matches
   char underscore[size]; //an array of underscores
   char arr[size]; //the array we are storing the correct guess in
 
   for(int j = 0; j < size; j++){ //store underscores in array
       underscore[j] = '_';
   }
+  for(int j = 0; j < size; j++){
+    arr[j] = ' ';
+  }
 
   while(gameOver == false){
+    cout << endl;
     cout << "Please enter a letter to guess" << endl;
     cout << "Your Guess: ";
     cin >> letter;
-    index = findMatch(randWord, letter, size); //find where in the string the letter occurs
 
-    if(index == -1){ //Incorrect guess
+    for(int i = 0; i<size; i++){
+      if(randWord[i] == letter){
+        arr[i] = letter;
+        found = true;
+        numCorrectGuesses++;
+      }
+
+
+    }
+
+    if(found == false){ //Incorrect guess
       cout << "Incorrect!" << endl;
       numIncorrectGuesses++;
       hangman2D(numIncorrectGuesses);
         if(numIncorrectGuesses == 6){
-          break;
+          gameOver = true;
         }
     }
+
     else{ //Correct Guess
-      arr[index] = letter;
       cout << endl;
       for(int k = 0; k < size; k++){
         cout << arr[k] << " ";
@@ -80,21 +112,17 @@ void guess(int wordLength, string randWord){
         cout << underscore[b] << " ";
       }
       cout << endl;
-
     }
+
+    if(numCorrectGuesses == (size)){ //check if player has guessed all correct letters
+      cout << "You Win!" << endl;
+      cout << endl;
+      break;
+    }
+    found = false; //reset found
   }
 }
 
-
-int findMatch(string randWord, char letter, int size){
-  int i;
-  for (i = 0; i < size; i++ ){
-    if(randWord[i] == letter){
-      return i;
-    }
-  }
-  return -1;
-}
 
 void hangman2D(int numIncorrectGuesses){
 
