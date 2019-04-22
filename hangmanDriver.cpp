@@ -34,9 +34,17 @@ void initializeGame(){
     while(!(cin >> wordLength)){
       cout << "Invalid" << endl;
       cin.clear();
+      cin >> wordLength;
     }
 
     string randWord = game.getRandomWord(wordLength);
+
+    while(randWord == "null"){
+      cout << endl;
+      cout << "Please enter a new length: ";
+      cin >> wordLength;
+      randWord = game.getRandomWord(wordLength);
+    }
 
     cout << "A random word has been chosen, now try to guess it!" << endl;
     cout << randWord << endl;

@@ -15,10 +15,35 @@ Tree::Tree(){
   root = nullptr;
 }
 
-/**************************
-Deconstructor
-**************************/
+/*************************** HELPER FUNCTION *************************/
+void deleteAllLLNodes(WordNode *head){
+  WordNode* temp;
+  while(head != nullptr){
+    temp = head;
+    head = head->next;
+    delete temp;
+  }
+  head = nullptr;
+}
+/********************* HELPER FUNCTION *********************/
+void deleteAllTreeNodes(TreeNode * currNode){
+  if(currNode == nullptr){
+    return;
+  }
+  if(currNode!=NULL)
+  {
+      deleteAllTreeNodes(currNode->left);
+      deleteAllTreeNodes(currNode->right);
+      deleteAllLLNodes(currNode->head);
+      delete currNode;
+      currNode = NULL;
+  }
+  return;
+}
+
+/**************** Deconstructor *************************/
 Tree::~Tree(){
+  deleteAllTreeNodes(root);
 }
 
 /*********************************************
@@ -175,6 +200,10 @@ Output: string
 *******************************************************/
 string Tree::getRandomWord(int wordlength){
   TreeNode *search = searchTreeNode(wordlength, root); // pointer to the TreeNode
+  if(search == nullptr){
+    cout << "Input word length not found" << endl;
+    return "null";
+  }
   int LLSize = search->llength; //store the amount of words in the linked list
   srand(time(NULL)); // initialize random number generator using seed
   int randNum = rand() % LLSize + 1; //generate random number between 1 to the size of the LL
