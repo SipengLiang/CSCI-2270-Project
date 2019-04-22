@@ -145,23 +145,25 @@ Output: NA
 void Tree::buildLibrary(){
   string filename;
   string line;
-  stringstream linedata;
+  bool open = false;
 
-  cout << "Enter name of dictionary: " << endl;
-  cin >> filename; //user input
+  while(!open){
+    cout << "Enter name of dictionary: " << endl;
+    cin >> filename; //user input
 
-  ifstream read(filename); //instantiate object
+    ifstream read(filename); //instantiate object
 
-  if(read.is_open()){
-    //check if the file was opened successfully
-    while(getline(read, line)){ // condition: there is a line with text
-      stringstream linedata(line);
-      getline(linedata, line, '\r');
-      addWord(line); //add the word to BST
+    if(read.is_open()){
+      open = true;
+      //check if the file was opened successfully
+      while(getline(read, line, '\n' )){ // condition: there is a line with text
+        // getline(read, line, '\n'); //get word from the line
+        addWord(line); //add the word to BST
+      }
     }
-  }
-  else{
-    cout << "File could not be opened." << endl; // error handler
+    else{
+      cout << "File could not be opened, please try again." << endl; // error handler
+    }
   }
 }
 

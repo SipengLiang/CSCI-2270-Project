@@ -25,7 +25,7 @@ void initializeGame(){
   bool newGame = true;
 
   cout << "Hello, welcome to hangman super deluxe edition(tm)" << endl;
-  
+
   game.buildLibrary();
 
   while(newGame == true){
@@ -67,26 +67,26 @@ void guess(int wordLength, string randWord){
   int numIncorrectGuesses = 0; //count the number of wrong guesses
   int numCorrectGuesses = 0; //count the number of correct guesses
   int size = (randWord.length()); // get size of word
-  
+
   char letter; //user input
   string strletter; //user input as string
-  
+
   bool gameOver = false; //state of the game
   bool found = false; //check to see if a letter matches
   bool guessed = false;
-    
+
   vector <char> guessedarr;
   char underscore[size]; //an array of underscores
   char arr[size]; //the array we are storing the correct guess in
 
-  
+
   for(int j = 0; j < size; j++){ //store underscores in array
     underscore[j] = '_';
   }
   for(int j = 0; j < size; j++){
     arr[j] = ' ';
   }
-  
+
 
   while(gameOver == false){
 
@@ -100,7 +100,7 @@ void guess(int wordLength, string randWord){
     letter = strletter[0];
 
 
-    
+
     //check if it was already guessed
     for(int i = 0; i < guessedarr.size(); i++){
       if(guessedarr[i] == letter){
@@ -112,14 +112,14 @@ void guess(int wordLength, string randWord){
       }
     }
 
-    
+
 
     //if letter is not guessed
     if(!guessed){
-      
+
       //push guessed letter into vector
       guessedarr.push_back(letter);
-      
+
       //string output
       for(int i = 0; i < size; i++){
 	if(randWord[i] == letter){
@@ -128,7 +128,7 @@ void guess(int wordLength, string randWord){
 	  numCorrectGuesses++;
 	}
       }
-    
+
       //Incorrect guess
       if(found == false){
 	cout << "Incorrect!" << endl;
@@ -162,7 +162,7 @@ void guess(int wordLength, string randWord){
     else{
       cout << endl << "Letter was already guessed" << endl;
     }
-    
+
     found = false; //reset found
     guessed = false;
   }
