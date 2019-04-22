@@ -65,10 +65,6 @@ void Tree::insertLLNode(TreeNode *treenode, WordNode *wordnode){
     wordnode->next = treenode->head;
     treenode->head = wordnode;
   }
-
-  //comes after the head
-  else{
-   }
 }
 
 /***********************************
