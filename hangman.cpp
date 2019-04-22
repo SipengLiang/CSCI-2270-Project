@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <fstream>
+#include <sstream>
 
 #include "hangman.hpp"
 
@@ -144,6 +145,7 @@ Output: NA
 void Tree::buildLibrary(){
   string filename;
   string line;
+  stringstream linedata;
 
   cout << "Enter name of dictionary: " << endl;
   cin >> filename; //user input
@@ -152,8 +154,9 @@ void Tree::buildLibrary(){
 
   if(read.is_open()){
     //check if the file was opened successfully
-    while(getline(read, line, '\n' )){ // condition: there is a line with text
-      // getline(read, line, '\n'); //get word from the line
+    while(getline(read, line)){ // condition: there is a line with text
+      stringstream linedata(line);
+      getline(linedata, line, '\r');
       addWord(line); //add the word to BST
     }
   }

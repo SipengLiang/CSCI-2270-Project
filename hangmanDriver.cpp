@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "hangman.hpp"
-#include "hangman.cpp"
 
 using namespace std;
 
@@ -14,6 +13,7 @@ void hangman2D(int numIncorrectGuesses); //2D hangman print (called by guess)
 
 int main(){
   initializeGame();
+  return 0;
 }
 
 void initializeGame(){
@@ -35,8 +35,6 @@ void initializeGame(){
 
     cout << "A random word has been chosen, now try to guess it!" << endl;
     cout << randWord << endl;
-
-    randWord.erase(randWord.length() - 1);
 
     guess(wordLength, randWord);
 
