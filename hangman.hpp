@@ -1,5 +1,5 @@
 #ifndef HANGMAN_HPP
-#define HANGMAN_HPP
+#define HANDMAN_HPP
 
 #include <string>
 
