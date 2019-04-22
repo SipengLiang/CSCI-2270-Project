@@ -44,15 +44,15 @@ void initializeGame(){
     cout << "3. EXIT" << endl;
     cin >> input;
 
-      if(input == 2){
-        game.buildLibrary();
-        cout << endl;
-        cout << "New Dictionary Added!" << endl;
-      }
-      else if (input == 3){
-        newGame = false;
-        cout << "Goodbye!" << endl;
-      }
+    if(input == 2){
+      game.buildLibrary();
+      cout << endl;
+      cout << "New Dictionary Added!" << endl;
+    }
+    else if (input == 3){
+      newGame = false;
+      cout << "Goodbye!" << endl;
+    }
   }
 }
 
@@ -63,13 +63,14 @@ void guess(int wordLength, string randWord){
   int numCorrectGuesses = 0; //count the number of correct guesses
   int size = (randWord.length()); // get size of word
   char letter; //user input
+  string strletter; //user input as string
   bool gameOver = false; //state of the game
   bool found = false; //check to see if a letter matches
   char underscore[size]; //an array of underscores
   char arr[size]; //the array we are storing the correct guess in
 
   for(int j = 0; j < size; j++){ //store underscores in array
-      underscore[j] = '_';
+    underscore[j] = '_';
   }
   for(int j = 0; j < size; j++){
     arr[j] = ' ';
@@ -79,7 +80,11 @@ void guess(int wordLength, string randWord){
     cout << endl;
     cout << "Please enter a letter to guess" << endl;
     cout << "Your Guess: ";
-    cin >> letter;
+    do{
+      getline(cin, strletter);
+    } while(strletter == "");
+    
+    letter = strletter[0];
 
     for(int i = 0; i<size; i++){
       if(randWord[i] == letter){
@@ -87,19 +92,16 @@ void guess(int wordLength, string randWord){
         found = true;
         numCorrectGuesses++;
       }
-
-
     }
 
     if(found == false){ //Incorrect guess
       cout << "Incorrect!" << endl;
       numIncorrectGuesses++;
       hangman2D(numIncorrectGuesses);
-        if(numIncorrectGuesses == 6){
-          gameOver = true;
-        }
+      if(numIncorrectGuesses == 6){
+	gameOver = true;
+      }
     }
-
     else{ //Correct Guess
       cout << endl;
       for(int k = 0; k < size; k++){
@@ -125,7 +127,7 @@ void guess(int wordLength, string randWord){
 void hangman2D(int numIncorrectGuesses){
 
   switch (numIncorrectGuesses) {
-    case 0:
+  case 0:
     cout << "    _________" << endl;
     cout << "    |       |" << endl;
     cout << "            |" << endl;
@@ -135,27 +137,27 @@ void hangman2D(int numIncorrectGuesses){
     cout << "         - - - - " << endl;
     cout << endl;
     break;
-    case 1:
-    cout << "    _________" << endl;
-    cout << "    |       |" << endl;
-    cout << "    O       |" << endl;
-    cout << "            |" << endl;
-    cout << "            |" << endl;
-    cout << "            |" << endl;
-    cout << "         - - - - " << endl;
-    cout << endl;
-    break;
-    case 2:
+  case 1:
     cout << "    _________" << endl;
     cout << "    |       |" << endl;
     cout << "    O       |" << endl;
+    cout << "            |" << endl;
+    cout << "            |" << endl;
+    cout << "            |" << endl;
+    cout << "         - - - - " << endl;
+    cout << endl;
+    break;
+  case 2:
+    cout << "    _________" << endl;
+    cout << "    |       |" << endl;
+    cout << "    O       |" << endl;
     cout << "    |       |" << endl;
     cout << "            |" << endl;
     cout << "            |" << endl;
     cout << "         - - - - " << endl;
     cout << endl;
     break;
-    case 3:
+  case 3:
     cout << "    _________" << endl;
     cout << "    |       |" << endl;
     cout << "    O       |" << endl;
@@ -165,7 +167,7 @@ void hangman2D(int numIncorrectGuesses){
     cout << "         - - - - " << endl;
     cout << endl;
     break;
-    case 4:
+  case 4:
     cout << "    _________" << endl;
     cout << "    |       |" << endl;
     cout << "    O       |" << endl;
@@ -175,7 +177,7 @@ void hangman2D(int numIncorrectGuesses){
     cout << "         - - - - " << endl;
     cout << endl;
     break;
-    case 5:
+  case 5:
     cout << "    _________" << endl;
     cout << "    |       |" << endl;
     cout << "    O       |" << endl;
@@ -185,7 +187,7 @@ void hangman2D(int numIncorrectGuesses){
     cout << "         - - - - " << endl;
     cout << endl;
     break;
-    case 6:
+  case 6:
     cout << "    _________" << endl;
     cout << "    |       |" << endl;
     cout << "    O       |" << endl;
@@ -198,5 +200,4 @@ void hangman2D(int numIncorrectGuesses){
     cout << endl;
     break;
   }
-
 }
