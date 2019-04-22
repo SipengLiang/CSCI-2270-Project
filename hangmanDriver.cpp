@@ -23,80 +23,80 @@ int main(){
 
 
 void initializeGame(){
-  Tree game;
-  int input;
-  
-  int wordLength;
-  string strWordLength;
-  bool wordLengthGood = true;
-  
-  bool newGame = true;
+  Tree game; //instantiate an object
+  int input; //user input variable
+
+  int wordLength; //integer length of the word
+  string strWordLength; //string input from the user
+  bool wordLengthGood = true; //check to make sure user input is a valid number
+
+  bool newGame = true; //used to start new game or exit
 
   cout << "Hello, welcome to hangman super deluxe edition(tm)" << endl;
   game.buildLibrary();
 
   while(newGame == true){
-    
+
     cout << "Please enter a length for the word: ";
     //get number and validate input
     do{
       getline(cin, strWordLength);
 
-      //check if it's a number
+      //check if the input was a number
       for(int i = 0; i < strWordLength.size(); i++){
-	if(!isdigit(strWordLength[i])){
-	  cout << "Invalid input. Enter new word length" << endl;
-	  wordLengthGood = false;
-	  break;
-	}
-	else{
-	  wordLengthGood = true;
-	}
+        if(!isdigit(strWordLength[i])){
+          cout << "Invalid input. Enter new word length" << endl;
+          wordLengthGood = false;
+          break;
+        }
+        else{
+          wordLengthGood = true;
+        }
       }
     } while(strWordLength == "" || !wordLengthGood); //redo if it isn't
 
-    //get number
+    //convert string to  number
     wordLength = stoi(strWordLength);
 
-    //get random word
+    //get a random word
     string randWord = game.getRandomWord(wordLength);
 
 
 
-    
-    //word length not found
+
+    //word length not found in the case the user enters a very large number
     while(randWord == "null"){
       cout << endl;
       cout << "Please enter a new length: ";
-      
-      do{
-	getline(cin, strWordLength);
 
-	//check if it's a number
-	for(int i = 0; i < strWordLength.size(); i++){
-	  if(!isdigit(strWordLength[i])){
-	    cout << "Invalid input. Enter new word length" << endl;
-	    wordLengthGood = false;
-	    break;
-	  }
-	  else{
-	    wordLengthGood = true;
-	  }
-	}
+      do{
+        getline(cin, strWordLength);
+
+        //check if the input was a number
+        for(int i = 0; i < strWordLength.size(); i++){
+          if(!isdigit(strWordLength[i])){
+            cout << "Invalid input. Enter new word length" << endl;
+            wordLengthGood = false;
+            break;
+          }
+          else{
+            wordLengthGood = true;
+          }
+        }
       } while(strWordLength == "" || !wordLengthGood); //redo if it isn't
-      
-      //get number
+
+      //conver string to int
       wordLength = stoi(strWordLength);
       //get random word
       randWord = game.getRandomWord(wordLength);
     }
 
-    
+
     cout << "A random word has been chosen, now try to guess it!" << endl;
-    //cout << randWord << endl;
-    guess(wordLength, randWord);
 
+    guess(wordLength, randWord); //function that controls the flow of the game
 
+    //menu
     cout << "1. NEW GAME" << endl;
     cout << "2. CHOOSE NEW DICTIONARY AND PLAY NEW GAME" << endl;
     cout << "3. EXIT" << endl;
@@ -128,7 +128,7 @@ void guess(int wordLength, string randWord){
   bool found = false; //check to see if a letter matches
   bool guessed = false;
 
-  vector <char> guessedarr;
+  vector <char> guessedarr; //vector to record all the gussed letters
   char underscore[size]; //an array of underscores
   char arr[size]; //the array we are storing the correct guess in
 
@@ -136,7 +136,7 @@ void guess(int wordLength, string randWord){
   for(int j = 0; j < size; j++){ //store underscores in array
     underscore[j] = '_';
   }
-  for(int j = 0; j < size; j++){
+  for(int j = 0; j < size; j++){ //store empty spaces
     arr[j] = ' ';
   }
 
@@ -154,83 +154,84 @@ void guess(int wordLength, string randWord){
 
 
 
-    //check if it was already guessed
+    //check if input was already guessed by searching through vector
     for(int i = 0; i < guessedarr.size(); i++){
       if(guessedarr[i] == letter){
-	guessed = true;
-	break;
+        guessed = true;
+        break;
       }
       else{
-	guessed = false;
+        guessed = false;
       }
     }
 
 
 
-    //if letter is not guessed
+    //if letter has not been guessed
     if(!guessed){
 
       //push guessed letter into vector
       guessedarr.push_back(letter);
 
-      //string output
+      //check if the new letter they have guessed is in the word
       for(int i = 0; i < size; i++){
-	if(randWord[i] == letter){
-	  arr[i] = letter;
-	  found = true;
-	  numCorrectGuesses++;
-	}
+        if(randWord[i] == letter){
+          arr[i] = letter; //place the letters in the correct position
+          found = true;
+          numCorrectGuesses++;
+        }
       }
 
       //Incorrect guess
       if(found == false){
-	cout << "Incorrect!" << endl;
-	numIncorrectGuesses++;
-	hangman2D(numIncorrectGuesses);
-	if(numIncorrectGuesses == 6){
-	  gameOver = true;
-	}
+        cout << "Incorrect!" << endl;
+        numIncorrectGuesses++; //increment number of incorrect guesses
+        hangman2D(numIncorrectGuesses); //display the hangman model
+        if(numIncorrectGuesses == 6){ //check if the user has guessed incorrectly too many times
+          gameOver = true; //game is over, player loses
+          cout << "The word was: " << randWord << endl;
+        }
       }
-      //Correct Guess
+      //Correct Guess -> output current string with the correct letters they have guessed
       else{
-	cout << endl;
-	for(int k = 0; k < size; k++){
-	  cout << arr[k] << " ";
-	}
-	cout << endl;
-	for(int b = 0; b < size; b++){
-	  cout << underscore[b] << " ";
-	}
-	cout << endl;
+        cout << endl;
+        for(int k = 0; k < size; k++){
+          cout << arr[k] << " ";
+        }
+        cout << endl;
+        for(int b = 0; b < size; b++){
+          cout << underscore[b] << " ";
+        }
+        cout << endl;
       }
 
       //check if player has guessed all correct letters
       if(numCorrectGuesses == (size)){
-	cout << "You Win!" << endl;
-	cout << endl;
-	break;
+        cout << "You Win!" << endl;
+        cout << endl;
+        break;
       }
     }
-    //letter was guessed
+    //if the letter was already guessed
     else{
       cout << endl << "Letter was already guessed" << endl;
       cout << "Letters Guessed:" << endl;
       for(int i = 0; i < guessedarr.size(); i++){
-	cout << guessedarr[i] << " ";
+        cout << guessedarr[i] << " ";
       }
       cout << endl;
     }
 
     found = false; //reset found
-    guessed = false;
+    guessed = false; //reset guessed
   }
 }
 
-
+//This function just outputs a 2D visualization of the hangman model whenever an incorrect word is guessed
 void hangman2D(int numIncorrectGuesses){
 
   switch (numIncorrectGuesses) {
-  case 0:
+    case 0:
     cout << "    _________" << endl;
     cout << "    |       |" << endl;
     cout << "            |" << endl;
@@ -240,27 +241,27 @@ void hangman2D(int numIncorrectGuesses){
     cout << "         - - - - " << endl;
     cout << endl;
     break;
-  case 1:
-    cout << "    _________" << endl;
-    cout << "    |       |" << endl;
-    cout << "    O       |" << endl;
-    cout << "            |" << endl;
-    cout << "            |" << endl;
-    cout << "            |" << endl;
-    cout << "         - - - - " << endl;
-    cout << endl;
-    break;
-  case 2:
+    case 1:
     cout << "    _________" << endl;
     cout << "    |       |" << endl;
     cout << "    O       |" << endl;
+    cout << "            |" << endl;
+    cout << "            |" << endl;
+    cout << "            |" << endl;
+    cout << "         - - - - " << endl;
+    cout << endl;
+    break;
+    case 2:
+    cout << "    _________" << endl;
+    cout << "    |       |" << endl;
+    cout << "    O       |" << endl;
     cout << "    |       |" << endl;
     cout << "            |" << endl;
     cout << "            |" << endl;
     cout << "         - - - - " << endl;
     cout << endl;
     break;
-  case 3:
+    case 3:
     cout << "    _________" << endl;
     cout << "    |       |" << endl;
     cout << "    O       |" << endl;
@@ -270,7 +271,7 @@ void hangman2D(int numIncorrectGuesses){
     cout << "         - - - - " << endl;
     cout << endl;
     break;
-  case 4:
+    case 4:
     cout << "    _________" << endl;
     cout << "    |       |" << endl;
     cout << "    O       |" << endl;
@@ -280,7 +281,7 @@ void hangman2D(int numIncorrectGuesses){
     cout << "         - - - - " << endl;
     cout << endl;
     break;
-  case 5:
+    case 5:
     cout << "    _________" << endl;
     cout << "    |       |" << endl;
     cout << "    O       |" << endl;
@@ -290,7 +291,7 @@ void hangman2D(int numIncorrectGuesses){
     cout << "         - - - - " << endl;
     cout << endl;
     break;
-  case 6:
+    case 6:
     cout << "    _________" << endl;
     cout << "    |       |" << endl;
     cout << "    O       |" << endl;

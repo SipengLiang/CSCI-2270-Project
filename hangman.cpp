@@ -18,7 +18,7 @@ Tree::Tree(){
 /*************************** HELPER FUNCTION *************************/
 void deleteAllLLNodes(WordNode *head){
   WordNode* temp;
-  while(head != nullptr){
+  while(head != nullptr){ //traverse through linked list deleting all the nodes
     temp = head;
     head = head->next;
     delete temp;
@@ -30,7 +30,7 @@ void deleteAllTreeNodes(TreeNode * currNode){
   if(currNode == nullptr){
     return;
   }
-  if(currNode!=NULL)
+  if(currNode!=NULL) //traverse through the tree to delete all the nodes
   {
       deleteAllTreeNodes(currNode->left);
       deleteAllTreeNodes(currNode->right);
@@ -65,10 +65,6 @@ void Tree::insertLLNode(TreeNode *treenode, WordNode *wordnode){
     wordnode->next = treenode->head;
     treenode->head = wordnode;
   }
-
-  //comes after the head
-  else{
-   }
 }
 
 /***********************************
