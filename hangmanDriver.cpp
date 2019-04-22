@@ -169,6 +169,11 @@ void guess(int wordLength, string randWord){
     //letter was guessed
     else{
       cout << endl << "Letter was already guessed" << endl;
+      cout << "Letters Guessed:" << endl;
+      for(int i = 0; i < guessedarr.size(); i++){
+	cout << guessedarr[i] << " ";
+      }
+      cout << endl;
     }
 
     found = false; //reset found

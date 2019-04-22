@@ -171,6 +171,7 @@ void Tree::buildLibrary(){
   string filename;
   string line;
   bool open = false;
+  stringstream linedata;
 
   while(!open){
     cout << "Enter name of dictionary: " << endl;
@@ -181,8 +182,9 @@ void Tree::buildLibrary(){
     if(read.is_open()){
       open = true;
       //check if the file was opened successfully
-      while(getline(read, line, '\n' )){ // condition: there is a line with text
-        // getline(read, line, '\n'); //get word from the line
+      while(getline(read, line)){ // condition: there is a line with text
+	stringstream linedata(line);
+	getline(linedata, line, '\r');
         addWord(line); //add the word to BST
       }
     }
