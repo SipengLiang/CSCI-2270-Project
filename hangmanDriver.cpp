@@ -12,43 +12,88 @@ void guess(int wordlength, string randWord); //main game mechanic (Calls findMat
 void hangman2D(int numIncorrectGuesses); //2D hangman print (called by guess)
 
 
+
+
 int main(){
   initializeGame();
   return 0;
 }
 
+
+
+
 void initializeGame(){
   Tree game;
   int input;
+  
   int wordLength;
-  string strwordLength;
+  string strWordLength;
+  bool wordLengthGood = true;
+  
   bool newGame = true;
 
   cout << "Hello, welcome to hangman super deluxe edition(tm)" << endl;
-
   game.buildLibrary();
 
   while(newGame == true){
-
+    
     cout << "Please enter a length for the word: ";
-    while(!(cin >> wordLength)){
-      cout << "Invalid" << endl;
-      cin.clear();
-      cin >> wordLength;
-    }
+    //get number and validate input
+    do{
+      getline(cin, strWordLength);
 
+      //check if it's a number
+      for(int i = 0; i < strWordLength.size(); i++){
+	if(!isdigit(strWordLength[i])){
+	  cout << "Invalid input. Enter new word length" << endl;
+	  wordLengthGood = false;
+	  break;
+	}
+	else{
+	  wordLengthGood = true;
+	}
+      }
+    } while(strWordLength == "" || !wordLengthGood); //redo if it isn't
+
+    //get number
+    wordLength = stoi(strWordLength);
+
+    //get random word
     string randWord = game.getRandomWord(wordLength);
 
+
+
+    
+    //word length not found
     while(randWord == "null"){
       cout << endl;
       cout << "Please enter a new length: ";
-      cin >> wordLength;
+      
+      do{
+	getline(cin, strWordLength);
+
+	//check if it's a number
+	for(int i = 0; i < strWordLength.size(); i++){
+	  if(!isdigit(strWordLength[i])){
+	    cout << "Invalid input. Enter new word length" << endl;
+	    wordLengthGood = false;
+	    break;
+	  }
+	  else{
+	    wordLengthGood = true;
+	  }
+	}
+      } while(strWordLength == "" || !wordLengthGood); //redo if it isn't
+      
+      //get number
+      wordLength = stoi(strWordLength);
+      //get random word
       randWord = game.getRandomWord(wordLength);
     }
 
+    
     cout << "A random word has been chosen, now try to guess it!" << endl;
-    cout << randWord << endl;
-
+    //cout << randWord << endl;
     guess(wordLength, randWord);
 
 
