@@ -62,19 +62,26 @@ void guess(int wordLength, string randWord){
   int numIncorrectGuesses = 0; //count the number of wrong guesses
   int numCorrectGuesses = 0; //count the number of correct guesses
   int size = (randWord.length()); // get size of word
+  int guessed = 0;
+  
   char letter; //user input
   string strletter; //user input as string
+  
   bool gameOver = false; //state of the game
   bool found = false; //check to see if a letter matches
+
+  char guessed[100];
   char underscore[size]; //an array of underscores
   char arr[size]; //the array we are storing the correct guess in
 
+  
   for(int j = 0; j < size; j++){ //store underscores in array
     underscore[j] = '_';
   }
   for(int j = 0; j < size; j++){
     arr[j] = ' ';
   }
+  
 
   while(gameOver == false){
     cout << endl;
@@ -83,7 +90,6 @@ void guess(int wordLength, string randWord){
     do{
       getline(cin, strletter);
     } while(strletter == "");
-    
     letter = strletter[0];
 
     for(int i = 0; i<size; i++){
