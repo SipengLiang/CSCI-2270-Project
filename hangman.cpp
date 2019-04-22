@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <fstream>
-#include <sstream>
 
 #include "hangman.hpp"
 
@@ -15,35 +14,10 @@ Tree::Tree(){
   root = nullptr;
 }
 
-/*************************** HELPER FUNCTION *************************/
-void deleteAllLLNodes(WordNode *head){
-  WordNode* temp;
-  while(head != nullptr){
-    temp = head;
-    head = head->next;
-    delete temp;
-  }
-  head = nullptr;
-}
-/********************* HELPER FUNCTION *********************/
-void deleteAllTreeNodes(TreeNode * currNode){
-  if(currNode == nullptr){
-    return;
-  }
-  if(currNode!=NULL)
-  {
-      deleteAllTreeNodes(currNode->left);
-      deleteAllTreeNodes(currNode->right);
-      deleteAllLLNodes(currNode->head);
-      delete currNode;
-      currNode = NULL;
-  }
-  return;
-}
-
-/**************** Deconstructor *************************/
+/**************************
+Deconstructor
+**************************/
 Tree::~Tree(){
-  deleteAllTreeNodes(root);
 }
 
 /*********************************************
@@ -171,7 +145,6 @@ void Tree::buildLibrary(){
   string filename;
   string line;
   bool open = false;
-  stringstream linedata;
 
   while(!open){
     cout << "Enter name of dictionary: " << endl;
@@ -182,9 +155,8 @@ void Tree::buildLibrary(){
     if(read.is_open()){
       open = true;
       //check if the file was opened successfully
-      while(getline(read, line)){ // condition: there is a line with text
-	stringstream linedata(line);
-	getline(linedata, line, '\r');
+      while(getline(read, line, '\n' )){ // condition: there is a line with text
+        // getline(read, line, '\n'); //get word from the line
         addWord(line); //add the word to BST
       }
     }
@@ -202,10 +174,6 @@ Output: string
 *******************************************************/
 string Tree::getRandomWord(int wordlength){
   TreeNode *search = searchTreeNode(wordlength, root); // pointer to the TreeNode
-  if(search == nullptr){
-    cout << "Input word length not found" << endl;
-    return "null";
-  }
   int LLSize = search->llength; //store the amount of words in the linked list
   srand(time(NULL)); // initialize random number generator using seed
   int randNum = rand() % LLSize + 1; //generate random number between 1 to the size of the LL
