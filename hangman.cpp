@@ -15,10 +15,35 @@ Tree::Tree(){
   root = nullptr;
 }
 
-/**************************
-Deconstructor
-**************************/
+/*************************** HELPER FUNCTION *************************/
+void deleteAllLLNodes(WordNode *head){
+  WordNode* temp;
+  while(head != nullptr){
+    temp = head;
+    head = head->next;
+    delete temp;
+  }
+  head = nullptr;
+}
+/********************* HELPER FUNCTION *********************/
+void deleteAllTreeNodes(TreeNode * currNode){
+  if(currNode == nullptr){
+    return;
+  }
+  if(currNode!=NULL)
+  {
+      deleteAllTreeNodes(currNode->left);
+      deleteAllTreeNodes(currNode->right);
+      deleteAllLLNodes(currNode->head);
+      delete currNode;
+      currNode = NULL;
+  }
+  return;
+}
+
+/**************** Deconstructor *************************/
 Tree::~Tree(){
+  deleteAllTreeNodes(root);
 }
 
 /*********************************************
